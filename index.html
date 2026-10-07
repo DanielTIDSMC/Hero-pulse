@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10151f">
+    <meta name="description" content="El centro de operaciones de tu equipo de héroes. Publica y consulta novedades incluso sin conexión.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>HeroPulse | Centro de operaciones</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Navegación principal">
+            <a class="brand" href="./" aria-label="HeroPulse, inicio">
+                <span class="brand-mark" aria-hidden="true">H</span>
+                <span>hero<span class="brand-light">pulse</span></span>
+            </a>
+
+            <p class="nav-heading">OPERACIONES</p>
+            <nav class="main-nav">
+                <button class="nav-item active" type="button" data-view="feed">
+                    <span aria-hidden="true">◈</span> Centro de actividad
+                </button>
+                <button class="nav-item" type="button" data-view="team">
+                    <span aria-hidden="true">◎</span> Mi equipo
+                </button>
+            </nav>
+
+            <div class="sidebar-team">
+                <p class="nav-heading">EN LÍNEA</p>
+                <div id="team-list" class="team-list"></div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="connection-card">
+                    <span class="connection-dot" aria-hidden="true"></span>
+                    <div>
+                        <strong id="connection-label">Conectando...</strong>
+                        <small id="sync-label">Preparando el centro</small>
+                    </div>
+                </div>
+                <p class="offline-note">Los avisos que publiques se guardan en este dispositivo y se sincronizan al volver la conexión.</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">TU BASE · SECTOR 07</p>
+                    <h1 id="page-title">Centro de actividad</h1>
+                </div>
+                <button id="notifications-button" class="notification-button" type="button">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+                    <span>Activar avisos</span>
+                </button>
+            </header>
+
+            <section class="welcome-card" aria-labelledby="welcome-title">
+                <div class="welcome-copy">
+                    <p class="eyebrow">ESTADO DEL EQUIPO</p>
+                    <h2 id="welcome-title">Buenas tardes, equipo.</h2>
+                    <p>Comparte una actualización y mantén a todos al tanto de la misión.</p>
+                    <div class="welcome-stats">
+                        <span><strong id="updates-count">0</strong> actualizaciones</span>
+                        <span class="stat-divider" aria-hidden="true"></span>
+                        <span><strong id="pending-count">0</strong> por sincronizar</span>
+                    </div>
+                </div>
+                <div class="orbit-art" aria-hidden="true">
+                    <span class="orbit orbit-one"></span>
+                    <span class="orbit orbit-two"></span>
+                    <span class="orbit-core">H</span>
+                    <span class="orbit-star star-one">✦</span>
+                    <span class="orbit-star star-two">✧</span>
+                </div>
+            </section>
+
+            <section class="compose-card" aria-labelledby="compose-title">
+                <div class="compose-avatar">
+                    <img id="composer-avatar" src="assets/avatars/spiderman.jpg" alt="">
+                </div>
+                <form id="update-form">
+                    <label id="compose-title" for="update-text">¿Qué está pasando en la misión?</label>
+                    <textarea id="update-text" maxlength="280" rows="3" placeholder="Escribe una actualización para el equipo..." required></textarea>
+                    <div class="compose-footer">
+                        <div class="compose-author">
+                            <label class="sr-only" for="hero-select">Publicar como</label>
+                            <select id="hero-select">
+                                <option value="spiderman">Spider-Man</option>
+                                <option value="ironman">Iron Man</option>
+                                <option value="wolverine">Wolverine</option>
+                                <option value="thor">Thor</option>
+                                <option value="hulk">Hulk</option>
+                            </select>
+                            <span id="character-count">0 / 280</span>
+                        </div>
+                        <button class="publish-button" type="submit">Publicar actualización <span aria-hidden="true">↗</span></button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="feed-section" class="feed-section" aria-labelledby="feed-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">EN TIEMPO REAL</p>
+                        <h2 id="feed-title">Últimas actualizaciones</h2>
+                    </div>
+                    <label class="filter-control">
+                        <span class="sr-only">Filtrar actualizaciones</span>
+                        <select id="feed-filter">
+                            <option value="all">Todo el equipo</option>
+                            <option value="spiderman">Spider-Man</option>
+                            <option value="ironman">Iron Man</option>
+                            <option value="wolverine">Wolverine</option>
+                            <option value="thor">Thor</option>
+                            <option value="hulk">Hulk</option>
+                        </select>
+                    </label>
+                </div>
+                <div id="feed-list" class="feed-list" aria-live="polite"></div>
+                <p id="empty-state" class="empty-state" hidden>No hay actualizaciones para este filtro todavía.</p>
+            </section>
+
+            <div id="app-message" class="app-message" role="status" aria-live="polite"></div>
+        </main>
+    </div>
+    <script src="app.js" defer></script>
+</body>
+</html>
