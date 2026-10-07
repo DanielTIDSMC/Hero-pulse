@@ -1,8 +1,9 @@
-const CACHE_NAME = 'heropulse-shell-v3';
+const CACHE_NAME = 'heropulse-shell-v4';
 const APP_SHELL = [
     './',
     './index.html',
     './styles.css',
+    './config.js',
     './app.js',
     './manifest.json',
     './assets/icons/icon.svg',

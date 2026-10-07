@@ -5,6 +5,8 @@ const HEROES = {
     thor: { name: 'Thor', handle: '@thor', avatar: 'assets/avatars/thor.jpg' },
     hulk: { name: 'Hulk', handle: '@hulk', avatar: 'assets/avatars/hulk.jpg' }
 };
+const API_BASE_URL = (window.HEROPULSE_API_URL || '').replace(/\/+$/, '');
+const apiUrl = (path) => `${API_BASE_URL}${path}`;
 const POSTS_KEY = 'heropulse.posts.v1';
 const SEED_POSTS = [
     { id: 'seed-1', hero: 'ironman', text: 'Revisé los sistemas de energía: todo listo para la próxima misión.', createdAt: Date.now() - 1000 * 60 * 9, likes: 8, liked: false, pending: false },
@@ -172,7 +174,7 @@ async function sendPendingPosts() {
     const pending = posts.filter((post) => post.pending);
     for (const post of pending) {
         try {
-            const response = await fetch('/api/push', {
+            const response = await fetch(apiUrl('/api/push'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -224,7 +226,7 @@ async function enableNotifications() {
         const registration = await navigator.serviceWorker.ready;
         let subscription = await registration.pushManager.getSubscription();
         if (!subscription) {
-            const configResponse = await fetch('/api/config');
+            const configResponse = await fetch(apiUrl('/api/config'));
             if (!configResponse.ok) throw new Error(`No se pudo obtener la configuración (${configResponse.status}).`);
             const config = await configResponse.json();
             if (!config.publicKey) throw new Error('El servidor no tiene configurada la clave pública VAPID.');
@@ -234,7 +236,7 @@ async function enableNotifications() {
             });
         }
 
-        const response = await fetch('/api/subscribe', {
+        const response = await fetch(apiUrl('/api/subscribe'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(subscription)
